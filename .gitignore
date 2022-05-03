@@ -1,7 +1,8 @@
 .vscode
 .*
 __pycache__
-venv
+.venv
+package-lock.json
 
 # OS generated files #
 ######################
