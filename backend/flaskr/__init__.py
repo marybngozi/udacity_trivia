@@ -209,7 +209,7 @@ def create_app(test_config=None):
                 body['previous_questions']) is list else []
 
             if bool(body['quiz_category']):
-                category_id = body['quiz_category']
+                category_id = body['quiz_category']['id']
                 category = Category.query.get(category_id)
 
             if category is not None:
