@@ -10,13 +10,23 @@ All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps
 
 Developers using this project should already have Python3, pip and node installed on their local machines.
 
-#### Backend
+### Backend
 
 All required packages are included in the requirements file.
 
 ```
 cd backend/
 pip install requirements.txt
+```
+
+Create a `.env` file in the backend folder to holder the keys below
+
+```
+DB_NAME='trivia'
+DB_TEST_NAME='trivia_test'
+DB_USER='<your_db_user>'
+DB_PASSWORD=''
+
 ```
 
 To run the application run the following commands:
@@ -31,7 +41,7 @@ These commands put the application in development and directs our application to
 
 The application is run on `http://127.0.0.1:5000/` by default and is a proxy in the frontend configuration.
 
-#### Frontend
+### Frontend
 
 From the root folder, run the following commands to start the client:
 
@@ -203,11 +213,11 @@ curl -X DELETE http://127.0.0.1:5000/questions/12
   - Sends a post request in order to get the next question
   - Takes the previous_questions and quiz_category
   - Returns: a single new question object that is not in the previous_questions
-- Sample Request:
+- Sample Request: (gets from any category)
 
 ```
 curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"previous_questions": [1, 4, 20, 15]
-    quiz_category": "current category"}'
+    quiz_category": {"type":"click", "id":0}'
 ```
 
 - Sample Response:

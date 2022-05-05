@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from flaskr import create_app
 from models import setup_db, Question, Category
+from settings import DB_TEST_NAME, DB_USER, DB_PASSWORD
 
 
 class TriviaTestCase(unittest.TestCase):
@@ -15,9 +16,9 @@ class TriviaTestCase(unittest.TestCase):
         self.app = create_app()
         self.client = self.app.test_client
         self.delete_id = 24  # to be updated
-        self.database_name = "trivia_test"
+        self.database_name = DB_TEST_NAME
         self.database_path = "postgresql://{}:{}@{}/{}".format(
-            'maryb', '', 'localhost:5432', self.database_name)
+            DB_USER, DB_PASSWORD, 'localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context
@@ -172,8 +173,8 @@ class TriviaTestCase(unittest.TestCase):
     # success: get a random question for quiz
     def test_post_quizzes(self):
         res = self.client().post('/quizzes', json={
-            'previous_questions': [5, 9, 12, 23],
-            'quiz_category': 4
+            'previous_questions': [5, 9, 23],
+            'quiz_category': {'id': 4, 'type': 'History'}
         })
         data = json.loads(res.data)
 
@@ -185,7 +186,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_post_quizzes_no_more_question_found(self):
         res = self.client().post('/quizzes', json={
             'previous_questions': [16, 17, 18, 19],
-            'quiz_category': 2
+            'quiz_category': {'id': 2, 'type': 'Art'}
         })
         data = json.loads(res.data)
 
@@ -196,7 +197,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_post_quizzes_max_reached(self):
         res = self.client().post('/quizzes', json={
             'previous_questions': [22, 17, 9, 5, 1],
-            'quiz_category': None
+            'quiz_category': {'type': None, 'id': 0}
         })
         data = json.loads(res.data)
 
